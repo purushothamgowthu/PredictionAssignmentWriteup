@@ -3,7 +3,6 @@ title: "Prediction Assignment Writeup"
 output: document
 ---
 #loading and processing
-
 ```{r warning=FALSE,cache=TRUE}
 setwd("C:/Users/PurushothamNaidu/Documents")
 url_train="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
@@ -20,8 +19,7 @@ training <- training[, which(colSums(is.na(training)) == 0)]
 testing <- testing[, which(colSums(is.na(testing)) == 0)]
 training <- training[,-c(1:7)] ##the first 7 columns are variables that has no relationship with "class"
 testing <- testing[,-c(1:7)]
-```
-
+``
 #Partioning the training set into training and crossvalidation datasets
 ```{r warning=FALSE, cache=TRUE}
 library(caret)
@@ -37,7 +35,6 @@ fit1 <- train(classe ~ ., method="rpart", data=train)
 val1 <- predict(fit1, validation)
 confusionMatrix(validation$classe, val1)
 ```
-
 #Modelling with random forest ("rf")
 ```{r warning=FALSE, cache=TRUE}
 fit2 <- train(classe ~ ., method="rf", data=train, prox=TRUE,ntree=250)
@@ -51,9 +48,6 @@ fit3 <- train(classe ~ ., method="gbm", data=train,trControl=trainControl(method
 val3 <- predict(fit3, validation)
 confusionMatrix(validation$classe, val3)
 ```
-
-
-
 #Prediction
 We used the random forest model for prediction
 ```{r warning=FALSE, cache=TRUE}
